@@ -6,7 +6,7 @@ from typing import Optional
 
 import typer
 
-from mailsleuth import __app_name__, __version__
+from ms import __app_name__, __version__
 
 app = typer.Typer()
 
@@ -14,12 +14,26 @@ app = typer.Typer()
 
 
 @app.command("read")
-def _read_eml(filepath: str)-> None:
+def _read_eml(filepath: str,
+              t: Optional[bool] = typer.Option(
+                    None,
+                    "--table",
+                    "-t",
+                    help="Display the email information in a table format.") 
+            ):
+    
     with open(filepath, 'rb') as f:# Bytesparser only takes bytes - must be in bytes mode
         parser = BytesParser()
         header = parser.parse(f)# headeronly is true by default. Creates email object here
-        print(header)#for testing
+    typer.echo(f"Subject: {header['subject']}") # for testing purposes
 
+    if t:
+        typer.echo("Displaying email information in table format...")
+        # t._get_table(header)  # Placeholder for table display logic
+
+    
+#---- Options ----
+# def _get_table(eml_header: object) 
 
 
 

@@ -1,7 +1,7 @@
 """Mailsleuth entry point script."""
 # rptodo/__main__.py
 
-from mailsleuth import cli, __app_name__
+from ms import cli, __app_name__
 
 def main():
     cli.app(prog_name=__app_name__)
