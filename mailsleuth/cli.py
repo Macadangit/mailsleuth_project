@@ -12,14 +12,13 @@ app = typer.Typer()
 
 #---- Commands -----
 
+
+@app.command("read")
 def _read_eml(filepath: str)-> None:
     with open(filepath, 'rb') as f:# Bytesparser only takes bytes - must be in bytes mode
         parser = BytesParser()
         header = parser.parse(f)# headeronly is true by default. Creates email object here
         print(header)#for testing
-
-
-
 
 
 
