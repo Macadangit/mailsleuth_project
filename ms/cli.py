@@ -1,11 +1,10 @@
 """This module provides the mailsleuth CLI."""
 # mailsleuth/cli.py
-from email.parser import BytesParser
-
+from email.parser import BytesHeaderParser
 from typing import Optional
-
+from rich.console import Console
+from rich.table import Table
 import typer
-
 from ms import __app_name__, __version__
 
 app = typer.Typer()
@@ -22,10 +21,10 @@ def _read_eml(filepath: str,
                     help="Display the email information in a table format.") 
             ):
     
-    with open(filepath, 'rb') as f:# Bytesparser only takes bytes - must be in bytes mode
-        parser = BytesParser()
-        header = parser.parse(f)# headeronly is true by default. Creates email object here
-    typer.echo(f"Subject: {header['subject']}") # for testing purposes
+    with open(filepath, 'rb') as f:# BytesHeaderParser only takes bytes - must be in bytes mode
+        parser = BytesHeaderParser()
+        header = parser.parse(f)# header only is true by default. Creates email object here
+    print(header.values())  # Print the email header for debugging purposes
 
     if t:
         typer.echo("Displaying email information in table format...")
@@ -33,6 +32,7 @@ def _read_eml(filepath: str,
 
     
 #---- Options ----
+
 # def _get_table(eml_header: object) 
 
 
